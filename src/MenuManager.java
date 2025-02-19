@@ -15,9 +15,9 @@ public class MenuManager {
        addToMenu.add(addToMenuDTO);
     }
 
-//    public void removeItem(String item, double price){
-//        System.out.println("removes from the menu");
-//    }
+    public void removeItem(String item, double price){
+        System.out.println("removes from the menu");
+    }
 
     public double getPrice(String coffeeName){
         double coffeePrice = readMenu.getPrice(coffeeName);
@@ -32,6 +32,5 @@ public class MenuManager {
     public boolean checkCoffee(String coffeeName){
         return readMenu.checkCoffeeExists(coffeeName);
     }
-
 
 }

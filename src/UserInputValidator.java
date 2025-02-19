@@ -1,7 +1,7 @@
 public class UserInputValidator {
 
     boolean checkUserResponseToPreferredCoffee(String userResponseToPreferredCoffee, MenuManager menuManager){
-        if(userResponseToPreferredCoffee == null){
+        if(userResponseToPreferredCoffee == null || userResponseToPreferredCoffee.isEmpty()){
             return false;
         }
         else if(userResponseToPreferredCoffee.equalsIgnoreCase("q")){
@@ -11,7 +11,7 @@ public class UserInputValidator {
     }
 
     boolean checkOrderQuantity(String userResponseToOrderQuantity){
-        if(userResponseToOrderQuantity == null){
+        if(userResponseToOrderQuantity == null || userResponseToOrderQuantity.isEmpty()) {
             return false;
         }
         else if(userResponseToOrderQuantity.equalsIgnoreCase("q")){
@@ -49,5 +49,17 @@ public class UserInputValidator {
             return false;
         }
         return cardNumber.length() == 16;
+    }
+
+    boolean checkUserResponseToOrderMoreItem(String userResponseToOrderMore) {
+        if (userResponseToOrderMore == null || userResponseToOrderMore.trim().isEmpty()) {
+            return false;
+        } else if (userResponseToOrderMore.equalsIgnoreCase("n")) {
+            return false;
+        } else if (!"y".equalsIgnoreCase(userResponseToOrderMore)) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }
