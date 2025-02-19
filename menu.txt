@@ -1,0 +1,20 @@
+"Espresso", 207.50
+"Americano", 228.25
+"Macchiato", 249.00
+"Flat White", 269.75
+"Mocha", 311.25
+"Affogato", 332.00
+"Iced Coffee", 290.50
+"Iced Latte", 311.25
+"Iced Mocha", 332.00
+"Cold Brew", 269.75
+"Turkish Coffee", 232.40
+"Irish Coffee", 373.50
+"Cortado", 269.75
+"Ristretto", 215.80
+"Nitro Coffee", 332.00
+"Breve", 290.50
+"Doppio", 232.40
+"Cafe au Lait", 249.00
+"Latte", 290.50
+"Cappuccino", 249.00

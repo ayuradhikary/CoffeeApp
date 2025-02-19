@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class Order {
     private List<String> coffeeItem;
@@ -26,9 +27,13 @@ public class Order {
     }
 
     public void displayOrderDetails() {
-        for (int i = 0; i < coffeeItem.size(); i++) {
-            System.out.println(coffeeItem.get(i) + " x" + quantities.get(i) + " - Rs." + prices.get(i) + " each");
-        }
+        double totalPrice = IntStream.range(0, coffeeItem.size())
+                .mapToDouble(i -> {
+                    System.out.println("Here is the description of your order: ");
+                    System.out.println(coffeeItem.get(i) + " x" + quantities.get(i) + " - Rs." + prices.get(i) + " each");
+                    return quantities.get(i) * prices.get(i);
+                })
+                .sum();
         System.out.println("Total: Rs." + totalPrice);
     }
 }

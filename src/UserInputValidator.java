@@ -1,18 +1,53 @@
 public class UserInputValidator {
-    MenuManager menuManager;
-    public UserInputValidator(MenuManager menuManager){
-        this.menuManager = menuManager;
-    }
 
-    boolean checkEquals(String response){
-        if(response == null){
+    boolean checkUserResponseToPreferredCoffee(String userResponseToPreferredCoffee, MenuManager menuManager){
+        if(userResponseToPreferredCoffee == null){
             return false;
         }
-        else if(response.equalsIgnoreCase("q")){
+        else if(userResponseToPreferredCoffee.equalsIgnoreCase("q")){
             return false;
         }
-        else return menuManager.checkCoffee(response);
+        else return menuManager.checkCoffee(userResponseToPreferredCoffee);
     }
 
+    boolean checkOrderQuantity(String userResponseToOrderQuantity){
+        if(userResponseToOrderQuantity == null){
+            return false;
+        }
+        else if(userResponseToOrderQuantity.equalsIgnoreCase("q")){
+            return false;
+        } else {
+            try {
+                Integer.parseInt(userResponseToOrderQuantity);
+                return true;
+            } catch (NumberFormatException e) {
+                return false;
+            }
+        }
+    }
 
+    String checkPaymentMethod(String userPaymentMethodChoice) {
+        if (userPaymentMethodChoice == null || userPaymentMethodChoice.trim().isEmpty()) {
+            return "Invalid payment method, terminating transaction";
+        }
+
+        userPaymentMethodChoice = userPaymentMethodChoice.trim();
+
+        if (userPaymentMethodChoice.equalsIgnoreCase("q")) {
+            return "Order Cancellation, terminating transaction";
+        } else if (userPaymentMethodChoice.equalsIgnoreCase("1")) {
+            return "Cash";
+        } else if (userPaymentMethodChoice.equalsIgnoreCase("2")) {
+            return "Credit card";
+        } else {
+            return "Invalid payment method, terminating transaction";
+        }
+    }
+
+    boolean checkCardValidation(String cardNumber){
+        if (cardNumber == null || cardNumber.trim().isEmpty() || cardNumber.equalsIgnoreCase("q")) {
+            return false;
+        }
+        return cardNumber.length() == 16;
+    }
 }
