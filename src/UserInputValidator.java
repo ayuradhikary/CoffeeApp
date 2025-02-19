@@ -1,7 +1,7 @@
 public class UserInputValidator {
     MenuManager menuManager;
-    public UserInputValidator(){
-        menuManager = new MenuManager();
+    public UserInputValidator(MenuManager menuManager){
+        this.menuManager = menuManager;
     }
 
     boolean checkEquals(String response){
@@ -13,4 +13,6 @@ public class UserInputValidator {
         }
         else return menuManager.checkCoffee(response);
     }
+
+
 }
