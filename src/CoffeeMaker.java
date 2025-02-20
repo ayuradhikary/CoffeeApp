@@ -1,7 +1,11 @@
 public class CoffeeMaker {
-    private String coffeeName = "";
-    private String quantity = "";
+    private String coffeeName;
+    private String quantity;
     private CoffeeOrderFactory coffeeOrderFactory;
+
+    public CoffeeMaker(CoffeeOrderFactory coffeeOrderFactory){
+        this.coffeeOrderFactory = coffeeOrderFactory;
+    }
 
     public CoffeeMaker setCoffeeName(String coffeeName) {
         this.coffeeName = coffeeName;
@@ -31,9 +35,8 @@ public class CoffeeMaker {
     }
 
     public Coffee make() {
-        if (coffeeOrderFactory == null) {
-            throw new IllegalStateException("CoffeeOrderFactory cannot be null");
-        }
+        System.out.println("your "+coffeeName+" has been prepared, for quantity: "+quantity);
+        System.out.println("Thank you for trusting us");
         return new Coffee(this);
     }
 

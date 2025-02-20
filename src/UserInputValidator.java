@@ -1,6 +1,6 @@
 public class UserInputValidator {
 
-    boolean checkUserResponseToPreferredCoffee(String userResponseToPreferredCoffee, MenuManager menuManager){
+    public static boolean  checkUserResponseToPreferredCoffee(String userResponseToPreferredCoffee, MenuManager menuManager){
         if(userResponseToPreferredCoffee == null || userResponseToPreferredCoffee.isEmpty()){
             return false;
         }
@@ -10,15 +10,15 @@ public class UserInputValidator {
         else return menuManager.checkCoffee(userResponseToPreferredCoffee);
     }
 
-    boolean checkOrderQuantity(String userResponseToOrderQuantity){
-        if(userResponseToOrderQuantity == null || userResponseToOrderQuantity.isEmpty()) {
+    public static boolean isInteger(String userResponse){
+        if(userResponse == null || userResponse.isEmpty()) {
             return false;
         }
-        else if(userResponseToOrderQuantity.equalsIgnoreCase("q")){
+        else if(userResponse.equalsIgnoreCase("q")){
             return false;
         } else {
             try {
-                Integer.parseInt(userResponseToOrderQuantity);
+                Integer.parseInt(userResponse);
                 return true;
             } catch (NumberFormatException e) {
                 return false;
@@ -26,7 +26,7 @@ public class UserInputValidator {
         }
     }
 
-    String checkPaymentMethod(String userPaymentMethodChoice) {
+    public static String checkPaymentMethod(String userPaymentMethodChoice) {
         if (userPaymentMethodChoice == null || userPaymentMethodChoice.trim().isEmpty()) {
             return "Invalid payment method, terminating transaction";
         }
@@ -44,17 +44,17 @@ public class UserInputValidator {
         }
     }
 
-    boolean checkCardValidation(String cardNumber){
+    public static boolean checkCardValidation(String cardNumber){
         if (cardNumber == null || cardNumber.trim().isEmpty() || cardNumber.equalsIgnoreCase("q")) {
             return false;
         }
         return cardNumber.length() == 16;
     }
 
-    boolean checkUserResponseToOrderMoreItem(String userResponseToOrderMore) {
+    public static boolean checkUserResponseToOrderMoreItem(String userResponseToOrderMore) {
         if (userResponseToOrderMore == null || userResponseToOrderMore.trim().isEmpty()) {
             return false;
-        } else if (userResponseToOrderMore.equalsIgnoreCase("n")) {
+        } else if ("n".equalsIgnoreCase(userResponseToOrderMore)) {
             return false;
         } else if (!"y".equalsIgnoreCase(userResponseToOrderMore)) {
             return false;
@@ -62,4 +62,9 @@ public class UserInputValidator {
             return true;
         }
     }
+
+    public static void userInvalidResponse(){
+        System.out.println("Invalid response");
+    }
+
 }
