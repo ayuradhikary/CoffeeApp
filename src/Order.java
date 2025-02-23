@@ -1,39 +1,38 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.IntStream;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Order {
-    private List<String> coffeeItem;
-    private List<Integer> quantities;
-    private List<Double> prices;
+    private Map<String, CoffeeItem> orderCoffeeItems;
     private double totalPrice;
 
-    public Order(){
-        this.coffeeItem = new ArrayList<>();
-        this.quantities = new ArrayList<>();
-        this.prices = new ArrayList<>();
+    public Order() {
+        this.orderCoffeeItems = new HashMap<>();
         this.totalPrice = 0.0;
     }
 
-    public void addOrder(String item, int quantity, double price) {
-        coffeeItem.add(item);
-        quantities.add(quantity);
-        prices.add(price);
-        totalPrice += price * quantity;
+    public void addOrder(String coffeeItem, int quantity, double price) {
+        if (orderCoffeeItems.containsKey(coffeeItem)) {
+            CoffeeItem existingItem = orderCoffeeItems.get(coffeeItem);
+            existingItem.setQuantity(existingItem.getQuantity() + quantity);
+            totalPrice += price * quantity;
+        } else {
+
+            CoffeeItem newcoffeeItem = new CoffeeItem(coffeeItem, quantity, price);
+            orderCoffeeItems.put(coffeeItem, newcoffeeItem);
+            totalPrice += newcoffeeItem.getTotalPrice();
+        }
     }
 
-    public double getTotalPrice(){
+
+    public double getTotalPrice() {
         return totalPrice;
     }
 
     public void displayOrderDetails() {
-        double totalPrice = IntStream.range(0, coffeeItem.size())
-                .mapToDouble(i -> {
-                    System.out.println("Here is the description of your order: ");
-                    System.out.println(coffeeItem.get(i) + " x" + quantities.get(i) + " - Rs." + prices.get(i) + " each");
-                    return quantities.get(i) * prices.get(i);
-                })
-                .sum();
+        System.out.println("Here is the description of your order: ");
+        for (CoffeeItem item : orderCoffeeItems.values()) {
+            System.out.println(item.getcoffeeItem() + " x" + item.getQuantity() + " - Rs." + item.getPrice() + " each");
+        }
         System.out.println("Total: Rs." + totalPrice);
     }
 }

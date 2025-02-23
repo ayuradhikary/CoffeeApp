@@ -1,4 +1,5 @@
 import java.awt.desktop.AboutEvent;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class CoffeeOrderProcess {
@@ -26,13 +27,30 @@ public class CoffeeOrderProcess {
     }
 
     public boolean getUserCoffeeChoice(){
-        System.out.println("Choose your preferred coffee: ");
-        userResponseToPreferredCoffee = userInputScanner.nextLine();
-        if(UserInputValidator.checkUserResponseToPreferredCoffee(userResponseToPreferredCoffee,menuManager)){
-            return true;
-        }else {
-            UserInputValidator.userInvalidResponse();
-            return false;
+        while (true){
+            System.out.println("please enter your coffee choice: ");
+            userResponseToPreferredCoffee = userInputScanner.nextLine();
+            Object userResponseChecked = UserInputValidator.checkUserResponseToPreferredCoffee(userResponseToPreferredCoffee, menuManager);
+            if(userResponseChecked == null){
+                UserInputValidator.userInvalidResponse();
+                continue;
+            } else if (userResponseChecked instanceof Boolean  booleanObj) {
+                return booleanObj;
+            }
+        }
+    }
+
+    public boolean getUserAdditionalCoffeeChoice(){
+        while (true){
+            System.out.println("please enter your coffee choice: ");
+            userResponseToAdditionalPreferredCoffee = userInputScanner.nextLine();
+            Object userResponseChecked = UserInputValidator.checkUserResponseToPreferredCoffee(userResponseToAdditionalPreferredCoffee, menuManager);
+            if(userResponseChecked == null){
+                UserInputValidator.userInvalidResponse();
+                continue;
+            } else if (userResponseChecked instanceof Boolean  booleanObj) {
+                return booleanObj;
+            }
         }
     }
 
@@ -82,8 +100,7 @@ public class CoffeeOrderProcess {
         }
         displayMenu();
         System.out.println("Please place the next order: ");
-        userResponseToAdditionalPreferredCoffee = userInputScanner.nextLine();
-        if(!UserInputValidator.checkUserResponseToPreferredCoffee(userResponseToAdditionalPreferredCoffee,menuManager)){
+        if(!getUserAdditionalCoffeeChoice()){
             return false;
         }
         System.out.println("How many of "+userResponseToAdditionalPreferredCoffee+" would you like to order? ");
@@ -113,10 +130,10 @@ public class CoffeeOrderProcess {
         while (true) {
             boolean additionalOrderHandled = handleAddtionalOrder();
             if (!additionalOrderHandled) {
-                System.out.println("Thank you for choosing us");
                 break;
             }
         }
+        System.out.println("Thank you for choosing us");
         return false;
     }
 

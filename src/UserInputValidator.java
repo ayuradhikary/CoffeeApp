@@ -1,17 +1,19 @@
 public class UserInputValidator {
 
-    public static boolean  checkUserResponseToPreferredCoffee(String userResponseToPreferredCoffee, MenuManager menuManager){
+    public static Object checkUserResponseToPreferredCoffee(String userResponseToPreferredCoffee, MenuManager menuManager){
         if(userResponseToPreferredCoffee == null || userResponseToPreferredCoffee.isEmpty()){
-            return false;
+            return null;
         }
         else if(userResponseToPreferredCoffee.equalsIgnoreCase("q")){
             return false;
         }
-        else return menuManager.checkCoffee(userResponseToPreferredCoffee);
+        else if(menuManager.checkCoffee(userResponseToPreferredCoffee)){
+            return true;
+        }else return null;
     }
 
     public static boolean isInteger(String userResponse){
-        if(userResponse == null || userResponse.isEmpty()) {
+        if(userResponse == null || userResponse.trim().isEmpty()) {
             return false;
         }
         else if(userResponse.equalsIgnoreCase("q")){
@@ -26,21 +28,13 @@ public class UserInputValidator {
         }
     }
 
-    public static String checkPaymentMethod(String userPaymentMethodChoice) {
-        if (userPaymentMethodChoice == null || userPaymentMethodChoice.trim().isEmpty()) {
-            return "Invalid payment method, terminating transaction";
-        }
-
-        userPaymentMethodChoice = userPaymentMethodChoice.trim();
-
-        if (userPaymentMethodChoice.equalsIgnoreCase("q")) {
-            return "Order Cancellation, terminating transaction";
-        } else if (userPaymentMethodChoice.equalsIgnoreCase("1")) {
-            return "Cash";
-        } else if (userPaymentMethodChoice.equalsIgnoreCase("2")) {
-            return "Credit card";
-        } else {
-            return "Invalid payment method, terminating transaction";
+    public static PaymentMethod checkPaymentMethod(String userPaymentMethodChoice) {
+        if("1".equals(userPaymentMethodChoice)){
+            return PaymentMethod.CASH;
+        }else if ("2".equals(userPaymentMethodChoice)){
+            return PaymentMethod.CREDIT_CARD;
+        }else {
+            return null;
         }
     }
 

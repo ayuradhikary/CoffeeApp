@@ -14,6 +14,5 @@ public class CoffeeShopApp {
         while (running){
             running = coffeeOrderProcess.handleCoffeeOrderProcess();
         }
-
     }
 }
