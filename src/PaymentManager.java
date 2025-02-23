@@ -22,7 +22,6 @@ public class PaymentManager {
                 return false;
             }
         } else if (paymentMethod == PaymentMethod.CASH) {
-
             System.out.println("Proceeding with cash payment.");
         }
 
@@ -58,6 +57,23 @@ public class PaymentManager {
         cardHolderName = userInputToPaymentScanner.nextLine();
         if (cardHolderName == null || cardHolderName.trim().isEmpty()) {
             System.out.println("Invalid credit card holder name");
+            return false;
+        }
+        System.out.println("please enter the expitation date of the card: ");
+        String cardExpirationDate = userInputToPaymentScanner.nextLine();
+        System.out.println("card expiration date entered");
+        if(!UserInputValidator.dateComparision(cardExpirationDate)){
+            System.out.println("your card has been expired, terminating transaction.");
+            return false;
+        }
+        System.out.println("Please enter your card verification value/code: ");
+        String cardVerificationValue = userInputToPaymentScanner.nextLine();
+        if(!UserInputValidator.isInteger(cardVerificationValue)){
+            System.out.println("Invalid verification code");
+            return false;
+        }
+        if(cardVerificationValue.length() != 4){
+            System.out.println("The length of card verification value must be equal to 4, terminating order!");
             return false;
         }
         System.out.println("Card details, card number ending with " + cardNumber.substring(12, 16) +

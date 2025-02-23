@@ -1,3 +1,7 @@
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class UserInputValidator {
 
     public static Object checkUserResponseToPreferredCoffee(String userResponseToPreferredCoffee, MenuManager menuManager){
@@ -61,4 +65,15 @@ public class UserInputValidator {
         System.out.println("Invalid response");
     }
 
+    public static boolean dateComparision(String date){
+        SimpleDateFormat inputFormat = new SimpleDateFormat("MM/yy");
+        try {
+            Date parsedDate = inputFormat.parse(date);
+            Date currentDate = new Date();
+            return !parsedDate.before(currentDate);
+        } catch (ParseException e) {
+            System.out.println("Exception: " +e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
 }
