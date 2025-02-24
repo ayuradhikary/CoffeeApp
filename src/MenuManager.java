@@ -16,13 +16,13 @@ public class MenuManager {
     }
 
     public void removeItem(String item, double price){
-        System.out.println("removes from the menu");
+        Utility.logMessagePrompt("removes from the menu");
     }
 
     public double getPrice(String coffeeName){
         double coffeePrice = readMenu.getPrice(coffeeName);
         if (coffeePrice == -1.0) {
-            System.out.println("No coffee found");
+            Utility.logMessagePrompt("No coffee found");
         } else {
             return coffeePrice;
         }

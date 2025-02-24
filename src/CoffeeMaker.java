@@ -35,8 +35,7 @@ public class CoffeeMaker {
     }
 
     public Coffee make() {
-        System.out.println("your "+coffeeName+" has been prepared, for quantity: "+quantity);
-        System.out.println("Thank you for trusting us");
+        Utility.logMessageWithArgument("your %d has been prepared, for quantity: %s",coffeeName,quantity);
         return new Coffee(this);
     }
 

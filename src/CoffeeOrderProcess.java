@@ -28,7 +28,7 @@ public class CoffeeOrderProcess {
 
     public boolean getUserCoffeeChoice(){
         while (true){
-            System.out.println("please enter your coffee choice: ");
+            Utility.logMessagePrompt("please enter your coffee choice: ");
             userResponseToPreferredCoffee = userInputScanner.nextLine();
             Object userResponseChecked = UserInputValidator.checkUserResponseToPreferredCoffee(userResponseToPreferredCoffee, menuManager);
             if(userResponseChecked == null){
@@ -41,7 +41,7 @@ public class CoffeeOrderProcess {
 
     public boolean getUserAdditionalCoffeeChoice(){
         while (true){
-            System.out.println("please enter your coffee choice: ");
+            Utility.logMessagePrompt("please enter your coffee choice: ");
             userResponseToAdditionalPreferredCoffee = userInputScanner.nextLine();
             Object userResponseChecked = UserInputValidator.checkUserResponseToPreferredCoffee(userResponseToAdditionalPreferredCoffee, menuManager);
             if(userResponseChecked == null){
@@ -53,7 +53,7 @@ public class CoffeeOrderProcess {
     }
 
     public boolean getOrderQuantity(){
-        System.out.println("How many "+ userResponseToPreferredCoffee+" would you like to order?: ");
+        Utility.logMessageWithArgument("How many %s would you like to order?: ", userResponseToPreferredCoffee);
         quantity = userInputScanner.next();
         userInputScanner.nextLine();
         if(UserInputValidator.isInteger(quantity)){
@@ -75,7 +75,7 @@ public class CoffeeOrderProcess {
     }
 
     public void prepareCoffee(String coffeeName, String coffeeQuantity){
-        System.out.println("-----preparing your coffee----");
+        Utility.logMessagePrompt("-----preparing your coffee----");
         coffeeMaker.setCoffeeName(coffeeName);
         coffeeMaker.setQuantity(coffeeQuantity);
         Coffee coffee =  coffeeMaker.make();
@@ -90,18 +90,18 @@ public class CoffeeOrderProcess {
     }
 
     public boolean handleAddtionalOrder(){
-        System.out.println(" would you like to order again? ");
+        Utility.logMessagePrompt(" would you like to order again? ");
         String userResponseToOrderMore = userInputScanner.next();
         userInputScanner.nextLine();
         if(!UserInputValidator.checkUserResponseToOrderMoreItem(userResponseToOrderMore)){
             return false;
         }
         displayMenu();
-        System.out.println("Please place the next order: ");
+        Utility.logMessagePrompt("Please place the next order: ");
         if(!getUserAdditionalCoffeeChoice()){
             return false;
         }
-        System.out.println("How many of "+userResponseToAdditionalPreferredCoffee+" would you like to order? ");
+        Utility.logMessageWithArgument("How many of %s would you like to order? ",userResponseToAdditionalPreferredCoffee);
         additionalQuantity = userInputScanner.next();
         userInputScanner.nextLine();
         if(!UserInputValidator.isInteger(additionalQuantity)){
@@ -131,7 +131,7 @@ public class CoffeeOrderProcess {
                 break;
             }
         }
-        System.out.println("Thank you for choosing us");
+        Utility.logMessagePrompt("Thank you for choosing us");
         return false;
     }
 

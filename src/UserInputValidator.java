@@ -62,7 +62,7 @@ public class UserInputValidator {
     }
 
     public static void userInvalidResponse(){
-        System.out.println("Invalid response");
+        Utility.logMessagePrompt("Invalid response");
     }
 
     public static boolean dateComparision(String date){

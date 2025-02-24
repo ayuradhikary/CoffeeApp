@@ -17,7 +17,7 @@ public class CoffeeOrderFactory{
             order.addOrder(coffeeItem, orderQuantity, price);
             orderPrice += price * orderQuantity;
         } else {
-            System.out.println("Item " + coffeeItem + " not found in the menu.");
+            Utility.logMessageWithArgument("Item %s not found in the menu.",coffeeItem);
         }
     }
 
@@ -29,7 +29,7 @@ public class CoffeeOrderFactory{
             order.addOrder(coffeeItem, orderQuantity, price);
             additionalAmount += price * orderQuantity;
         } else {
-            System.out.println("Item " + coffeeItem + " not found in the menu.");
+            Utility.logMessageWithArgument("Item %s not found in the menu.", coffeeItem);
         }
     }
 

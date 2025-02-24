@@ -18,11 +18,11 @@ public class AddToMenu implements Addable{
                 String formattedMessage = String.format("\"%s\", %.2f", entry.getKey(), entry.getValue());
                 writer.write(formattedMessage);
                 writer.newLine();
-                System.out.println(formattedMessage);
+                Utility.logMessageWithArgument(formattedMessage);
             }
 
         }catch (IOException e){
-            System.out.println("could not write to the file");
+            Utility.logMessagePrompt("could not write to the file");
             e.printStackTrace();
         }
     }

@@ -28,10 +28,12 @@ public class Order {
     }
 
     public void displayOrderDetails() {
-        System.out.println("Here is the description of your order: ");
+        Utility.logMessagePrompt("Here is the description of your order: ");
         for (CoffeeItem item : orderCoffeeItems.values()) {
-            System.out.println(item.getcoffeeItem() + " x" + item.getQuantity() + " - Rs." + item.getPrice() + " each");
+            Utility.logMessageWithArgument("%s x %d - Rs.%f each",
+                    item.getcoffeeItem(), item.getQuantity(), item.getPrice());
         }
-        System.out.println("Total: Rs." + totalPrice);
+        Utility.logMessageWithArgument("Total: Rs.%f", totalPrice);
+
     }
 }

@@ -7,8 +7,8 @@ public class CoffeeShopApp {
         CoffeeMaker coffeeMaker = new CoffeeMaker(coffeeOrderFactory);
         CoffeeOrderProcess coffeeOrderProcess = new CoffeeOrderProcess(menuManager,coffeeMaker,paymentManager,coffeeOrderFactory);
 
-        System.out.println("--------Welcome------");
-        System.out.println("--------Please enter 'Q' to exit--------");
+        Utility.logMessagePrompt("--------Welcome------");
+        Utility.logMessagePrompt("--------Please enter 'Q' to exit--------");
 
         boolean running = true;
         while (running){

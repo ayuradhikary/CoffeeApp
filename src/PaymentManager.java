@@ -11,7 +11,7 @@ public class PaymentManager {
         if (paymentMethod == null) {
             return false;
         }
-        System.out.println("Proceeding payment with " + paymentMethod.getDescription());
+        Utility.logMessageWithArgument("Proceeding payment with: ",paymentMethod.getDescription());
         Payment payment = createPayment(paymentMethod);
         if (payment == null) {
             return false;
@@ -22,7 +22,7 @@ public class PaymentManager {
                 return false;
             }
         } else if (paymentMethod == PaymentMethod.CASH) {
-            System.out.println("Proceeding with cash payment.");
+            Utility.logMessagePrompt("Proceeding with cash payment");
         }
 
         payment.makePayment(price);
@@ -30,8 +30,8 @@ public class PaymentManager {
     }
 
     private PaymentMethod getPaymentMethod() {
-        System.out.println("How would you like to pay? ");
-        System.out.println("1. Cash, 2. Credit card");
+        Utility.logMessagePrompt("How would you like to pay? ");
+        Utility.logMessagePrompt("1. Cash, 2. Credit card");
         String userPaymentMethod = userInputToPaymentScanner.next();
 
         if (!UserInputValidator.isInteger(userPaymentMethod)) {
@@ -48,64 +48,63 @@ public class PaymentManager {
 
     private boolean processCreditCardPayment() {
         for (int attempts = 0; attempts < 3; attempts++) {
-            System.out.println("Please enter your card number: ");
+            Utility.logMessagePrompt("Please enter your card number: ");
             cardNumber = userInputToPaymentScanner.next();
             userInputToPaymentScanner.nextLine();
             if (UserInputValidator.checkCardValidation(cardNumber)) {
                  break;
             } else {
-                System.out.println("Invalid card number.");
+                Utility.logMessagePrompt("Invalid card number.");
                 if (attempts == 2) {
-                    System.out.println("You have reached the maximum attempts for card number.");
+                    Utility.logMessagePrompt("You have reached the maximum attempts for card number.");
                     return false;
                 }
             }
         }
 
         for (int attempts = 0; attempts < 3; attempts++) {
-            System.out.println("Please enter the card holder name: ");
+            Utility.logMessagePrompt("Please enter the card holder name: ");
             cardHolderName = userInputToPaymentScanner.nextLine();
             if (cardHolderName != null && !cardHolderName.trim().isEmpty()) {
                 break;
             } else {
-                System.out.println("Invalid credit card holder name.");
+                Utility.logMessagePrompt("Invalid credit card holder name.");
                 if (attempts == 2) {
-                    System.out.println("You have reached the maximum attempts for card holder name.");
+                    Utility.logMessagePrompt("You have reached the maximum attempts for card holder name.");
                     return false;
                 }
             }
         }
 
         for (int attempts = 0; attempts < 3; attempts++) {
-            System.out.println("Please enter the expiration date of the card (MM/YY): ");
+            Utility.logMessagePrompt("Please enter the expiration date of the card (MM/YY): ");
             String cardExpirationDate = userInputToPaymentScanner.nextLine();
             if (UserInputValidator.dateComparision(cardExpirationDate)) {
                 break;
             } else {
-                System.out.println("Invalid expiration date.");
+                Utility.logMessagePrompt("Invalid expiration date.");
                 if (attempts == 2) {
-                    System.out.println("Your card has been expired, terminating transaction.");
+                    Utility.logMessagePrompt("Your card has been expired, terminating transaction.");
                     return false;
                 }
             }
         }
 
         for (int attempts = 0; attempts < 2; attempts++) {
-            System.out.println("Please enter your card verification value/code (4 digits): ");
+            Utility.logMessagePrompt("Please enter your card verification value/code (4 digits): ");
             String cardVerificationValue = userInputToPaymentScanner.nextLine();
             if (UserInputValidator.isInteger(cardVerificationValue) && cardVerificationValue.length() == 4) {
                 break;
             } else {
-                System.out.println("Invalid verification code.");
+                Utility.logMessagePrompt("Invalid verification code.");
                 if (attempts == 1) {
-                    System.out.println("You have reached the maximum attempts for verification code.");
+                    Utility.logMessagePrompt("You have reached the maximum attempts for verification code.");
                     return false;
                 }
             }
         }
-
-        System.out.println("Card details, card number ending with " + cardNumber.substring(12, 16) +
-                " and cardholder name: " + cardHolderName);
+        Utility.logMessageWithArgument("Card details, card number ending with %s and cardholder name: %s",
+                cardNumber.substring(12, 16), cardHolderName);
         return true;
     }
 }
