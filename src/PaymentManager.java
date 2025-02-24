@@ -1,7 +1,5 @@
-import java.util.Scanner;
 
 public class PaymentManager {
-    private Scanner userInputToPaymentScanner = new Scanner(System.in);
     private PaymentFactory paymentFactory;
     private String cardNumber;
     private String cardHolderName;
@@ -32,7 +30,7 @@ public class PaymentManager {
     private PaymentMethod getPaymentMethod() {
         Utility.logMessagePrompt("How would you like to pay? ");
         Utility.logMessagePrompt("1. Cash, 2. Credit card");
-        String userPaymentMethod = userInputToPaymentScanner.next();
+        String userPaymentMethod = Utility.getStringInput();
 
         if (!UserInputValidator.isInteger(userPaymentMethod)) {
             return null;
@@ -49,8 +47,7 @@ public class PaymentManager {
     private boolean processCreditCardPayment() {
         for (int attempts = 0; attempts < 3; attempts++) {
             Utility.logMessagePrompt("Please enter your card number: ");
-            cardNumber = userInputToPaymentScanner.next();
-            userInputToPaymentScanner.nextLine();
+            cardNumber = Utility.getStringInput();
             if (UserInputValidator.checkCardValidation(cardNumber)) {
                  break;
             } else {
@@ -64,7 +61,7 @@ public class PaymentManager {
 
         for (int attempts = 0; attempts < 3; attempts++) {
             Utility.logMessagePrompt("Please enter the card holder name: ");
-            cardHolderName = userInputToPaymentScanner.nextLine();
+            cardHolderName = Utility.getStringInput();
             if (cardHolderName != null && !cardHolderName.trim().isEmpty()) {
                 break;
             } else {
@@ -78,7 +75,7 @@ public class PaymentManager {
 
         for (int attempts = 0; attempts < 3; attempts++) {
             Utility.logMessagePrompt("Please enter the expiration date of the card (MM/YY): ");
-            String cardExpirationDate = userInputToPaymentScanner.nextLine();
+            String cardExpirationDate = Utility.getStringInput();
             if (UserInputValidator.dateComparision(cardExpirationDate)) {
                 break;
             } else {
@@ -92,7 +89,7 @@ public class PaymentManager {
 
         for (int attempts = 0; attempts < 2; attempts++) {
             Utility.logMessagePrompt("Please enter your card verification value/code (4 digits): ");
-            String cardVerificationValue = userInputToPaymentScanner.nextLine();
+            String cardVerificationValue = Utility.getStringInput();
             if (UserInputValidator.isInteger(cardVerificationValue) && cardVerificationValue.length() == 4) {
                 break;
             } else {

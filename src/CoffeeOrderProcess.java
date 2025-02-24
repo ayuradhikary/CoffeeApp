@@ -1,13 +1,9 @@
-import java.awt.desktop.AboutEvent;
-import java.util.Objects;
-import java.util.Scanner;
 
 public class CoffeeOrderProcess {
     MenuManager menuManager;
     CoffeeMaker coffeeMaker;
     PaymentManager paymentManager;
     CoffeeOrderFactory coffeeOrderFactory;
-    Scanner userInputScanner;
     String userResponseToPreferredCoffee;
     String quantity;
     String userResponseToAdditionalPreferredCoffee;
@@ -18,7 +14,6 @@ public class CoffeeOrderProcess {
         this.coffeeMaker = coffeeMaker;
         this.paymentManager = paymentManager;
         this.coffeeOrderFactory = coffeeOrderFactory;
-        userInputScanner = new Scanner(System.in);
 
     }
 
@@ -29,12 +24,12 @@ public class CoffeeOrderProcess {
     public boolean getUserCoffeeChoice(){
         while (true){
             Utility.logMessagePrompt("please enter your coffee choice: ");
-            userResponseToPreferredCoffee = userInputScanner.nextLine();
-            Object userResponseChecked = UserInputValidator.checkUserResponseToPreferredCoffee(userResponseToPreferredCoffee, menuManager);
+            userResponseToPreferredCoffee = Utility.getStringInput();
+            Boolean userResponseChecked = UserInputValidator.checkUserResponseToPreferredCoffee(userResponseToPreferredCoffee, menuManager);
             if(userResponseChecked == null){
                 UserInputValidator.userInvalidResponse();
-            } else if (userResponseChecked instanceof Boolean  booleanObj) {
-                return booleanObj;
+            } else {
+                return userResponseChecked;
             }
         }
     }
@@ -42,20 +37,19 @@ public class CoffeeOrderProcess {
     public boolean getUserAdditionalCoffeeChoice(){
         while (true){
             Utility.logMessagePrompt("please enter your coffee choice: ");
-            userResponseToAdditionalPreferredCoffee = userInputScanner.nextLine();
-            Object userResponseChecked = UserInputValidator.checkUserResponseToPreferredCoffee(userResponseToAdditionalPreferredCoffee, menuManager);
+            userResponseToAdditionalPreferredCoffee = Utility.getStringInput();
+            Boolean userResponseChecked = UserInputValidator.checkUserResponseToPreferredCoffee(userResponseToAdditionalPreferredCoffee, menuManager);
             if(userResponseChecked == null){
                 UserInputValidator.userInvalidResponse();
-            } else if (userResponseChecked instanceof Boolean  booleanObj) {
-                return booleanObj;
+            } else {
+                return userResponseChecked;
             }
         }
     }
 
     public boolean getOrderQuantity(){
         Utility.logMessageWithArgument("How many %s would you like to order?: ", userResponseToPreferredCoffee);
-        quantity = userInputScanner.next();
-        userInputScanner.nextLine();
+        quantity = Utility.getStringInput();
         if(UserInputValidator.isInteger(quantity)){
             return true;
         }else {
@@ -91,8 +85,7 @@ public class CoffeeOrderProcess {
 
     public boolean handleAddtionalOrder(){
         Utility.logMessagePrompt(" would you like to order again? ");
-        String userResponseToOrderMore = userInputScanner.next();
-        userInputScanner.nextLine();
+        String userResponseToOrderMore = Utility.getStringInput();
         if(!UserInputValidator.checkUserResponseToOrderMoreItem(userResponseToOrderMore)){
             return false;
         }
@@ -102,8 +95,7 @@ public class CoffeeOrderProcess {
             return false;
         }
         Utility.logMessageWithArgument("How many of %s would you like to order? ",userResponseToAdditionalPreferredCoffee);
-        additionalQuantity = userInputScanner.next();
-        userInputScanner.nextLine();
+        additionalQuantity = Utility.getStringInput();
         if(!UserInputValidator.isInteger(additionalQuantity)){
             return false;
         }

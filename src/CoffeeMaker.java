@@ -35,7 +35,7 @@ public class CoffeeMaker {
     }
 
     public Coffee make() {
-        Utility.logMessageWithArgument("your %d has been prepared, for quantity: %s",coffeeName,quantity);
+        Utility.logMessageWithArgument("your %s has been prepared, for quantity: %s",coffeeName,quantity);
         return new Coffee(this);
     }
 
