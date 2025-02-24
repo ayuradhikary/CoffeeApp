@@ -33,7 +33,6 @@ public class CoffeeOrderProcess {
             Object userResponseChecked = UserInputValidator.checkUserResponseToPreferredCoffee(userResponseToPreferredCoffee, menuManager);
             if(userResponseChecked == null){
                 UserInputValidator.userInvalidResponse();
-                continue;
             } else if (userResponseChecked instanceof Boolean  booleanObj) {
                 return booleanObj;
             }
@@ -47,7 +46,6 @@ public class CoffeeOrderProcess {
             Object userResponseChecked = UserInputValidator.checkUserResponseToPreferredCoffee(userResponseToAdditionalPreferredCoffee, menuManager);
             if(userResponseChecked == null){
                 UserInputValidator.userInvalidResponse();
-                continue;
             } else if (userResponseChecked instanceof Boolean  booleanObj) {
                 return booleanObj;
             }

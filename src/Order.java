@@ -16,7 +16,6 @@ public class Order {
             existingItem.setQuantity(existingItem.getQuantity() + quantity);
             totalPrice += price * quantity;
         } else {
-
             CoffeeItem newcoffeeItem = new CoffeeItem(coffeeItem, quantity, price);
             orderCoffeeItems.put(coffeeItem, newcoffeeItem);
             totalPrice += newcoffeeItem.getTotalPrice();

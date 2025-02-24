@@ -47,35 +47,63 @@ public class PaymentManager {
     }
 
     private boolean processCreditCardPayment() {
-        System.out.println("Please enter your card number: ");
-        cardNumber = userInputToPaymentScanner.next();
-        userInputToPaymentScanner.nextLine();
-        if (!UserInputValidator.checkCardValidation(cardNumber)) {
-            return false;
+        for (int attempts = 0; attempts < 3; attempts++) {
+            System.out.println("Please enter your card number: ");
+            cardNumber = userInputToPaymentScanner.next();
+            userInputToPaymentScanner.nextLine();
+            if (UserInputValidator.checkCardValidation(cardNumber)) {
+                 break;
+            } else {
+                System.out.println("Invalid card number.");
+                if (attempts == 2) {
+                    System.out.println("You have reached the maximum attempts for card number.");
+                    return false;
+                }
+            }
         }
-        System.out.println("Please enter the card holder name: ");
-        cardHolderName = userInputToPaymentScanner.nextLine();
-        if (cardHolderName == null || cardHolderName.trim().isEmpty()) {
-            System.out.println("Invalid credit card holder name");
-            return false;
+
+        for (int attempts = 0; attempts < 3; attempts++) {
+            System.out.println("Please enter the card holder name: ");
+            cardHolderName = userInputToPaymentScanner.nextLine();
+            if (cardHolderName != null && !cardHolderName.trim().isEmpty()) {
+                break;
+            } else {
+                System.out.println("Invalid credit card holder name.");
+                if (attempts == 2) {
+                    System.out.println("You have reached the maximum attempts for card holder name.");
+                    return false;
+                }
+            }
         }
-        System.out.println("please enter the expitation date of the card: ");
-        String cardExpirationDate = userInputToPaymentScanner.nextLine();
-        System.out.println("card expiration date entered");
-        if(!UserInputValidator.dateComparision(cardExpirationDate)){
-            System.out.println("your card has been expired, terminating transaction.");
-            return false;
+
+        for (int attempts = 0; attempts < 3; attempts++) {
+            System.out.println("Please enter the expiration date of the card (MM/YY): ");
+            String cardExpirationDate = userInputToPaymentScanner.nextLine();
+            if (UserInputValidator.dateComparision(cardExpirationDate)) {
+                break;
+            } else {
+                System.out.println("Invalid expiration date.");
+                if (attempts == 2) {
+                    System.out.println("Your card has been expired, terminating transaction.");
+                    return false;
+                }
+            }
         }
-        System.out.println("Please enter your card verification value/code: ");
-        String cardVerificationValue = userInputToPaymentScanner.nextLine();
-        if(!UserInputValidator.isInteger(cardVerificationValue)){
-            System.out.println("Invalid verification code");
-            return false;
+
+        for (int attempts = 0; attempts < 2; attempts++) {
+            System.out.println("Please enter your card verification value/code (4 digits): ");
+            String cardVerificationValue = userInputToPaymentScanner.nextLine();
+            if (UserInputValidator.isInteger(cardVerificationValue) && cardVerificationValue.length() == 4) {
+                break;
+            } else {
+                System.out.println("Invalid verification code.");
+                if (attempts == 1) {
+                    System.out.println("You have reached the maximum attempts for verification code.");
+                    return false;
+                }
+            }
         }
-        if(cardVerificationValue.length() != 4){
-            System.out.println("The length of card verification value must be equal to 4, terminating order!");
-            return false;
-        }
+
         System.out.println("Card details, card number ending with " + cardNumber.substring(12, 16) +
                 " and cardholder name: " + cardHolderName);
         return true;

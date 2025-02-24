@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class UserInputValidator {
 
-    public static Object checkUserResponseToPreferredCoffee(String userResponseToPreferredCoffee, MenuManager menuManager){
+    public static Boolean checkUserResponseToPreferredCoffee(String userResponseToPreferredCoffee, MenuManager menuManager){
         if(userResponseToPreferredCoffee == null || userResponseToPreferredCoffee.isEmpty()){
             return null;
         }
