@@ -3,8 +3,11 @@ public class PaymentManager {
     private PaymentFactory paymentFactory;
     private String cardNumber;
     private String cardHolderName;
+    private CustomerFactory customerFactory;
+    Customer customer;
+    String custId;
 
-    public boolean makePayment(double price) {
+    public boolean makePayment(double price , CustomerOrderDetailsDTO customerOrderDetailsDTO) {
         PaymentMethod paymentMethod = getPaymentMethod();
         if (paymentMethod == null) {
             return false;
@@ -16,13 +19,18 @@ public class PaymentManager {
         }
 
         if (paymentMethod == PaymentMethod.CREDIT_CARD) {
-            if (!processCreditCardPayment()) {
+            if (!processCreditCardPayment(customerOrderDetailsDTO)){
                 return false;
             }
         } else if (paymentMethod == PaymentMethod.CASH) {
             Utility.logMessagePrompt("Proceeding with cash payment");
         }
 
+        customerFactory = new CustomerFactory(PaymentMethod.CASH);
+        customer = customerFactory.getCustomer();
+        custId = customer.getCustId();
+        customerOrderDetailsDTO.setCustId(custId);
+        customerOrderDetailsDTO.setPaymentMethod(PaymentMethod.CASH);
         payment.makePayment(price);
         return true;
     }
@@ -44,7 +52,7 @@ public class PaymentManager {
         return paymentFactory.createPayment(paymentMethod);
     }
 
-    private boolean processCreditCardPayment() {
+    private boolean processCreditCardPayment(CustomerOrderDetailsDTO customerOrderDetailsDTO) {
         for (int attempts = 0; attempts < 3; attempts++) {
             Utility.logMessagePrompt("Please enter your card number: ");
             cardNumber = Utility.getStringInput();
@@ -102,6 +110,12 @@ public class PaymentManager {
         }
         Utility.logMessageWithArgument("Card details, card number ending with %s and cardholder name: %s",
                 cardNumber.substring(12, 16), cardHolderName);
+        customerFactory = new CustomerFactory(PaymentMethod.CREDIT_CARD);
+        customerFactory = new CustomerFactory(PaymentMethod.CASH);
+        customer = customerFactory.getCustomer();
+        custId = customer.getCustId();
+        customerOrderDetailsDTO.setCustId(custId);
+        customerOrderDetailsDTO.setPaymentMethod(PaymentMethod.CREDIT_CARD);
         return true;
     }
 }

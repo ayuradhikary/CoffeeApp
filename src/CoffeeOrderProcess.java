@@ -8,13 +8,16 @@ public class CoffeeOrderProcess {
     String quantity;
     String userResponseToAdditionalPreferredCoffee;
     String additionalQuantity;
+    CustomerOrderDetailsDTO customerOrderDetailsDTO;
+    String orderId;
+    ConcreteDatabase coffeeAppDatabase;
 
-    public CoffeeOrderProcess(MenuManager menuManager, CoffeeMaker coffeeMaker, PaymentManager paymentManager,CoffeeOrderFactory coffeeOrderFactory){
+    public CoffeeOrderProcess(MenuManager menuManager, CoffeeMaker coffeeMaker, PaymentManager paymentManager,CoffeeOrderFactory coffeeOrderFactory,CustomerOrderDetailsDTO customerOrderDetailsDTO){
         this.menuManager = menuManager;
         this.coffeeMaker = coffeeMaker;
         this.paymentManager = paymentManager;
         this.coffeeOrderFactory = coffeeOrderFactory;
-
+        this.customerOrderDetailsDTO = customerOrderDetailsDTO;
     }
 
     public void displayMenu(){
@@ -60,11 +63,21 @@ public class CoffeeOrderProcess {
 
     public void processOrder(String coffeeName, String coffeeQuantity){
         coffeeOrderFactory.createOrder(menuManager,coffeeName,coffeeQuantity);
+        orderId = coffeeOrderFactory.getOrderId();
+        double price = coffeeOrderFactory.getTotalPrice();
+        customerOrderDetailsDTO.setOrderId(orderId);
+        customerOrderDetailsDTO.setCoffeeName(coffeeName);
+        customerOrderDetailsDTO.setQuantity(coffeeQuantity);
+        customerOrderDetailsDTO.setPrice(price);
         coffeeOrderFactory.orderDetails();
     }
 
     public void processAdditionalOrder(String addedCoffeeName, String addedQuantity){
         coffeeOrderFactory.addAdditionalOrder(menuManager,addedCoffeeName,addedQuantity);
+        customerOrderDetailsDTO.setadditionalCoffeeName(addedCoffeeName);
+        customerOrderDetailsDTO.setAdditionalQuantity(addedQuantity);
+        double additionalPrice = coffeeOrderFactory.getAdditionalAmount();
+        customerOrderDetailsDTO.setAdditionalPrice(additionalPrice);
         coffeeOrderFactory.orderDetails();
     }
 
@@ -76,11 +89,11 @@ public class CoffeeOrderProcess {
     }
 
     public boolean handlePayment(){
-        return paymentManager.makePayment(coffeeOrderFactory.getTotalPrice());
+        return paymentManager.makePayment(coffeeOrderFactory.getTotalPrice(),customerOrderDetailsDTO);
     }
 
     public boolean handleAdditionalPayment(){
-        return paymentManager.makePayment(coffeeOrderFactory.getAdditionalAmount());
+        return paymentManager.makePayment(coffeeOrderFactory.getAdditionalAmount(), customerOrderDetailsDTO);
     }
 
     public boolean handleAddtionalOrder(){
@@ -123,6 +136,16 @@ public class CoffeeOrderProcess {
                 break;
             }
         }
+        coffeeAppDatabase = DBConnector.connectToDb("CoffeeAppDatase");
+        Table customer = DBConnector.connectToTable("Customer");
+        String[] customerColumns = {"custId","payment_method","orderId"};
+        customer.addColumnsAndInsert("Customer",customerColumns,customerOrderDetailsDTO.custId,customerOrderDetailsDTO.paymentMethod,customerOrderDetailsDTO.orderId);
+        Table order = DBConnector.connectToTable("Order");
+        String[] orderColumns = {"orderId","coffee_name","coffee_price","quantity","added_coffee_name","additional_price","added_coffee_quantity"};
+        order.addColumnsAndInsert("Order",orderColumns,customerOrderDetailsDTO.orderId,
+                customerOrderDetailsDTO.coffeeName,customerOrderDetailsDTO.price,customerOrderDetailsDTO.quantity,
+                customerOrderDetailsDTO.additionalCoffeeName,customerOrderDetailsDTO.additionalPrice,
+                customerOrderDetailsDTO.additionalQuantity);
         Utility.logMessagePrompt("Thank you for choosing us");
         return false;
     }

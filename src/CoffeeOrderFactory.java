@@ -3,34 +3,27 @@ public class CoffeeOrderFactory{
     Order order;
     private double orderPrice;
     private double additionalAmount;
+    String orderId;
 
     public CoffeeOrderFactory(){
         order = new Order();
         additionalAmount = 0.0;
         orderPrice = 0.0;
+        orderId = order.getOrderId();
     }
 
     public void createOrder(MenuManager menuManager, String coffeeItem, String quantity) {
-        if (menuManager.checkCoffee(coffeeItem)) {
             double price = menuManager.getPrice(coffeeItem);
             int orderQuantity = Integer.parseInt(quantity);
             order.addOrder(coffeeItem, orderQuantity, price);
             orderPrice += price * orderQuantity;
-        } else {
-            Utility.logMessageWithArgument("Item %s not found in the menu.",coffeeItem);
-        }
     }
 
     public void addAdditionalOrder(MenuManager menuManager, String coffeeItem, String quantity){
-        additionalAmount = 0.0;
-        if (menuManager.checkCoffee(coffeeItem)) {
+            additionalAmount = 0.0;
             double price = menuManager.getPrice(coffeeItem);
             int orderQuantity = Integer.parseInt(quantity);
             order.addOrder(coffeeItem, orderQuantity, price);
-            additionalAmount += price * orderQuantity;
-        } else {
-            Utility.logMessageWithArgument("Item %s not found in the menu.", coffeeItem);
-        }
     }
 
     public void orderDetails(){
@@ -41,9 +34,12 @@ public class CoffeeOrderFactory{
         return orderPrice;
     }
 
-
     public double getAdditionalAmount() {
         return additionalAmount;
+    }
+
+    public String getOrderId(){
+        return orderId;
     }
 
 }
