@@ -1,20 +1,14 @@
 Table: Customer
-custId	payment_method	orderId	
-854c3a69-3e4c-4889-9d24-687b517a1b7c	CASH	76e2d691-7ba3-4fb5-be29-93e5e018c22f	
----------------------------------------------------------------------------------
+custId | payment_method | orderId
+------------------------------------------------
+4e67ce19-cd99-4006-8866-a1880c2df4fe | CASH | eeea63b7-19fb-4664-bdf2-eb0e31adb0c7
+
+4862324e-78c9-49ee-b223-632d3379463e | CASH | c15b3e4a-0035-41b6-ac37-bf9f0f807368
+
 Table: Order
-orderId	coffee_name	coffee_price	quantity	added_coffee_name	additional_price	added_coffee_quantity	
-76e2d691-7ba3-4fb5-be29-93e5e018c22f	americano	228.25	1	NULL	0.0	NULL	
----------------------------------------------------------------------------------
-custId	payment_method	orderId	
-1d450fa9-7be1-448d-883a-fb56c442d979	CASH	8491d877-20d2-4ee0-8c3e-6b0ef2926689	
----------------------------------------------------------------------------------
-orderId	coffee_name	coffee_price	quantity	added_coffee_name	additional_price	added_coffee_quantity	
-8491d877-20d2-4ee0-8c3e-6b0ef2926689	latte	290.5	1	NULL	0.0	NULL	
----------------------------------------------------------------------------------
-custId	payment_method	orderId	
-6abda625-653e-4d02-8433-f5bb36551b97	CASH	9bd3ab5e-0260-4cb1-9ae0-a3b6bb450074	
----------------------------------------------------------------------------------
-orderId	coffee_name	coffee_price	quantity	added_coffee_name	additional_price	added_coffee_quantity	
-9bd3ab5e-0260-4cb1-9ae0-a3b6bb450074	americano	228.25	1	latte	290.5	2	
----------------------------------------------------------------------------------
+orderId | coffee_name | coffee_price | quantity | added_coffee_name | additional_price | added_coffee_quantity
+------------------------------------------------
+eeea63b7-19fb-4664-bdf2-eb0e31adb0c7 | breve | 290.5 | 1 | NULL | 0.0 | NULL
+
+c15b3e4a-0035-41b6-ac37-bf9f0f807368 | americano | 228.25 | 1 | cold brew | 269.75 | 3
+

@@ -1,5 +1,3 @@
-import java.security.PublicKey;
-import java.util.List;
 
 public class DBConnector {
 
@@ -11,15 +9,16 @@ public class DBConnector {
         return concreteDatabase;
     }
 
-    public static Table connectToTable(String tableName){
+    public static Table connectToTable(String tableName, String...columnNames){
         if(!DatabaseUtility.checkTableExists(concreteDatabase.databaseName, tableName)){
             table = new Table(concreteDatabase);
-            table.createTable(tableName);
+            table.createTable(tableName, columnNames);
             return table;
         }else {
             table =  new Table(concreteDatabase);
             return table;
         }
     }
+
 
 }

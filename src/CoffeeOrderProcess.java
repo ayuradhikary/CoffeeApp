@@ -133,14 +133,14 @@ public class CoffeeOrderProcess {
             }
         }
         coffeeAppDatabase = DBConnector.connectToDb("CoffeeAppDatase");
-        Table customer = DBConnector.connectToTable("Customer");
         String[] customerColumns = {"custId","payment_method","orderId"};
-        customer.addColumnsAndInsert("Customer",customerColumns,customerOrderDetailsDTO.custId,customerOrderDetailsDTO.paymentMethod,customerOrderDetailsDTO.orderId);
-        Table order = DBConnector.connectToTable("Order");
+        Table customer = DBConnector.connectToTable("Customer",customerColumns);
+        customer.insert("Customer",customerColumns,customerOrderDetailsDTO.custId,customerOrderDetailsDTO.paymentMethod,customerOrderDetailsDTO.orderId);
         String[] orderColumns = {"orderId","coffee_name",
                 "coffee_price","quantity","added_coffee_name","additional_price",
                 "added_coffee_quantity"};
-        order.addColumnsAndInsert("Order",orderColumns,customerOrderDetailsDTO.orderId,
+        Table order = DBConnector.connectToTable("Order",orderColumns);
+        order.insert("Order",orderColumns,customerOrderDetailsDTO.orderId,
                 customerOrderDetailsDTO.coffeeName,customerOrderDetailsDTO.price,
                 customerOrderDetailsDTO.quantity,
                 customerOrderDetailsDTO.additionalCoffeeName,
