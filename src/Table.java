@@ -74,7 +74,7 @@ public class Table {
             values.put(columnNames[i], inputValues[i]);
         }
 
-        if (!addToDatabase()) {
+        if (!addToDatabase(tableName)) {
             Utility.logMessagePrompt("Cannot insert the data.");
             return false;
         }
@@ -83,8 +83,8 @@ public class Table {
         return true;
     }
 
-    private boolean addToDatabase(){
-        return DatabaseUtility.writeColumnNamesAndValues(columnNames, values, concreteDatabase.databaseName);
+    private boolean addToDatabase(String tableName){
+        return DatabaseUtility.writeColumnNamesAndValues(tableName,columnNames, values, concreteDatabase.databaseName);
     }
 
 }

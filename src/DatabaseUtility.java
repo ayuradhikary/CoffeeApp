@@ -2,6 +2,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -45,27 +46,35 @@ public class DatabaseUtility {
         return false;
     }
 
-    public static boolean writeColumnNamesAndValues(List<?> columnList, HashMap<?, ?> values, String dbName) {
+    public static boolean writeColumnNamesAndValues(String tableName,List<?> columnList, HashMap<?, ?> values, String dbName) {
         Path databaseFolder = Paths.get("databases");
-        Path path = databaseFolder.resolve(dbName+".txt");
+        Path path = databaseFolder.resolve(dbName + ".txt");
         File fileName = path.toFile();
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true))) {
-            if (fileName.length() == 0 || !hasColumnNames(fileName, columnList)) {
+           // if(!checkTableExists(dbName,tableName)){
                 for (Object column : columnList) {
                     String columnName = (String) column;
                     writer.write(columnName);
                     writer.write("\t");
                 }
                 writer.newLine();
-            }
-
+            //}
             for (Object column : columnList) {
                 String columnName = (String) column;
                 Object columnValue = values.get(columnName);
-                writer.write(columnValue.toString());
+
+                if (columnValue == null) {
+                    writer.write("NULL");
+                } else {
+                    writer.write(columnValue.toString());
+                }
+
                 writer.write("\t");
             }
+
+            writer.newLine();
+            writer.write("---------------------------------------------------------------------------------");
             writer.newLine();
             return true;
         } catch (IOException e) {
@@ -74,23 +83,4 @@ public class DatabaseUtility {
         return false;
     }
 
-    private static boolean hasColumnNames(File dbFile, List<?> columnList) {
-        try (BufferedReader reader = new BufferedReader(new FileReader(dbFile))) {
-            String line = reader.readLine();
-            if (line != null) {
-                String[] existingColumns = line.split("\t");
-                if (existingColumns.length == columnList.size()) {
-                    for (int i = 0; i < columnList.size(); i++) {
-                        if (!existingColumns[i].equals(columnList.get(i))) {
-                            return false;
-                        }
-                    }
-                    return true;
-                }
-            }
-        } catch (IOException e) {
-            Utility.logMessageWithArgument("Error reading file to check columns: ", e.getMessage());
-        }
-        return false;
-    }
 }

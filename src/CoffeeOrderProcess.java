@@ -73,11 +73,7 @@ public class CoffeeOrderProcess {
     }
 
     public void processAdditionalOrder(String addedCoffeeName, String addedQuantity){
-        coffeeOrderFactory.addAdditionalOrder(menuManager,addedCoffeeName,addedQuantity);
-        customerOrderDetailsDTO.setadditionalCoffeeName(addedCoffeeName);
-        customerOrderDetailsDTO.setAdditionalQuantity(addedQuantity);
-        double additionalPrice = coffeeOrderFactory.getAdditionalAmount();
-        customerOrderDetailsDTO.setAdditionalPrice(additionalPrice);
+        coffeeOrderFactory.addAdditionalOrder(menuManager,addedCoffeeName,addedQuantity, customerOrderDetailsDTO);
         coffeeOrderFactory.orderDetails();
     }
 
@@ -141,13 +137,16 @@ public class CoffeeOrderProcess {
         String[] customerColumns = {"custId","payment_method","orderId"};
         customer.addColumnsAndInsert("Customer",customerColumns,customerOrderDetailsDTO.custId,customerOrderDetailsDTO.paymentMethod,customerOrderDetailsDTO.orderId);
         Table order = DBConnector.connectToTable("Order");
-        String[] orderColumns = {"orderId","coffee_name","coffee_price","quantity","added_coffee_name","additional_price","added_coffee_quantity"};
+        String[] orderColumns = {"orderId","coffee_name",
+                "coffee_price","quantity","added_coffee_name","additional_price",
+                "added_coffee_quantity"};
         order.addColumnsAndInsert("Order",orderColumns,customerOrderDetailsDTO.orderId,
-                customerOrderDetailsDTO.coffeeName,customerOrderDetailsDTO.price,customerOrderDetailsDTO.quantity,
-                customerOrderDetailsDTO.additionalCoffeeName,customerOrderDetailsDTO.additionalPrice,
+                customerOrderDetailsDTO.coffeeName,customerOrderDetailsDTO.price,
+                customerOrderDetailsDTO.quantity,
+                customerOrderDetailsDTO.additionalCoffeeName,
+                customerOrderDetailsDTO.additionalPrice,
                 customerOrderDetailsDTO.additionalQuantity);
         Utility.logMessagePrompt("Thank you for choosing us");
         return false;
     }
-
 }

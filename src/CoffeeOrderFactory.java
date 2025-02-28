@@ -19,9 +19,12 @@ public class CoffeeOrderFactory{
             orderPrice += price * orderQuantity;
     }
 
-    public void addAdditionalOrder(MenuManager menuManager, String coffeeItem, String quantity){
+    public void addAdditionalOrder(MenuManager menuManager, String coffeeItem, String quantity, CustomerOrderDetailsDTO customerOrderDetailsDTO){
             additionalAmount = 0.0;
             double price = menuManager.getPrice(coffeeItem);
+            customerOrderDetailsDTO.setAdditionalQuantity(quantity);
+            customerOrderDetailsDTO.setadditionalCoffeeName(coffeeItem);
+            customerOrderDetailsDTO.setAdditionalPrice(price);
             int orderQuantity = Integer.parseInt(quantity);
             order.addOrder(coffeeItem, orderQuantity, price);
     }
